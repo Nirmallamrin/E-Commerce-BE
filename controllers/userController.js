@@ -61,3 +61,71 @@ export const signin = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 }
+
+export const signout = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        console.log(error, "Something wrong");
+        res.status(500).send("Internal Server Error");
+    }
+ 
+}
+
+export const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        if(!users){
+            res.status(404).json({error:'Users not found'})
+        }
+        res.status(200).json(users)
+    } catch (error) {
+        console.log(error, "Something wrong");
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+export const getUserbyUserName = async (req,res) => {
+    try{
+
+        const user = await User.findOne({ userName: req.params.username }).exec();
+        if(!user) {
+            res.status(404).json({error:'User not found'})
+        }
+        res.status(200).json(user)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({error:'Internal server error'})
+
+    }
+}
+
+export const updateUserbyId = async (req,res) => {
+    try{
+
+        const user = await User.findByIdAndUpdate(req.params.id,req.body,{new:true} )
+        if(!user) {
+            res.status(404).json({error:'User not found'})
+        }
+        res.status(200).json(user)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({error:'Internal server error'})
+
+    }
+}
+
+export const deleteUser = async (req,res) => {
+    try{
+
+        const user = await User.findByIdAndDelete(req.params.id,req.body,{new:true} )
+        if(!user) {
+            res.status(404).json({error:'User not found'})
+        }
+        res.status(200).json({message:"successfully deleted"})
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({error:'Internal server error'})
+
+    }
+}
