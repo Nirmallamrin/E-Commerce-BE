@@ -135,7 +135,7 @@ export const forgetPassword = async (req, res) => {
         return res.status(404).send({ message: "User not found" });
       }
   
-      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+      const token = jwt.sign({ userId: user._id }, process.env.SE, {
         expiresIn: "10m",
       });
   
@@ -158,7 +158,7 @@ export const forgetPassword = async (req, res) => {
           <p>If you didn't request a password reset, please ignore this email.</p>`,
       };
   
-      await transporter.sendMail(mailOptions, (err, info) => {
+       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
           return res.status(500).send({ message: err.message });
         }
