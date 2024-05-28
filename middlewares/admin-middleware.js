@@ -17,7 +17,7 @@ function authenticateAdmin(req, res, next) {
     }
 
     req.user = user;
-    console.log(req.user.role)
+    console.log(req.user)
 
     if (req.user.role !== "admin") {
       return res.status(403).send("Access denied. Admins only.");

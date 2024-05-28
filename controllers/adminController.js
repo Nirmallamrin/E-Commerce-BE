@@ -1,13 +1,13 @@
-import User from "../models/userModel.js";
+import Admin from '../models/adminModel.js';
 import bcrypt from 'bcrypt';
-import { generateToken } from "../generateToken.js";
+import { adminToken} from "../generateToken.js";
 
 export const adminSignup = async (req, res) => {
     try {
         const {userName, email, password} = req.body;
-        const userExist = await User.findOne({email});
+        const adminExist = await Admin.findOne({email});
 
-        if(userExist) {
+        if(adminExist) {
             return res.status(400).send("user is already exist")
 
         }
@@ -15,20 +15,20 @@ export const adminSignup = async (req, res) => {
         const saltRounds = 10;
         const hashPassword = await bcrypt.hash(password, saltRounds);
 
-        const newUser = new User({
+        const newAdmin = new Admin({
             userName,
             email,
-            password,
+            hashPassword,
             role: 'admin' //set role to admin
         })
 
-        const newUserCreated = await newUser.save();
+        const newAdminCreated = await newAdmin.save();
 
-        if(!newUserCreated) {
+        if(!newAdminCreated) {
             res.status(500).send('User not created')
         }
 
-        const token = generateToken(email, 'admin');
+        const token = adminToken(email, 'admin');
 
         res.cookie("token", token)
         res.status(201).send("Admin signed up successfully")
@@ -42,19 +42,19 @@ export const adminSignup = async (req, res) => {
 export const adminSignin = async(req, res) => {
     try {
         const{ email, password} = req.body
-        const user = await User.findOne({email});
+        const admin = await Admin.findOne({email});
 
-        if(!user) {
+        if(!admin) {
             return res.send("User not found")
         }
 
-        const matchPassword = await bcrypt.compare(password, user.hashPassword)
+        const matchPassword = await bcrypt.compare(password, admin.hashPassword)
 
         if(!matchPassword){
             return res.send("password is not correct");
         }
 
-        const token = generateToken(email);
+        const token = adminToken(email, 'admin');
         res.cookie("token", token);
         res.send("Admin logged in successfully")
     } catch (error) {
@@ -65,12 +65,4 @@ export const adminSignin = async(req, res) => {
 };
 
 
-export const getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.status(200).json(users)
-    } catch (error) {
-        console.error("Error fetching users:", error);
-        res.status(500).send("Internal server error.");
-    }
-}
+

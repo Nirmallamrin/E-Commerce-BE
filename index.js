@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import userRouter from './routers/userRoutes.js';
+import adminRouter from './routers/adminRoutes.js';
 
 
 const app = express();
@@ -13,10 +14,11 @@ connect()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
-app.use(cookieParser());
-app.use(express.json());
 
-app.use("/api/v1/user", userRouter)
+app.use(express.json());
+app.use(cookieParser());
+app.use("/api/v1/users", userRouter)
+app.use("/api/v1/users", adminRouter)
 
 
 app.get('/', (req, res) => {

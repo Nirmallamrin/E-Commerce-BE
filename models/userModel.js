@@ -18,19 +18,8 @@ const userSchema = new mongoose.Schema(
             required: true,
             minLength: 6,
         },
-        avatar: {
-            public_id: {
-              type: String,
-              required: true
-            },
-            url: {
-              type: String,
-              required: true
-            }
-          },
         role: {
             type: String,
-            enum: ['user', 'admin'],
             default: 'user',
         },
         resetPasswordToken: String,

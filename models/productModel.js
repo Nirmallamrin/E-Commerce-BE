@@ -51,3 +51,7 @@ const productSchema = new mongoose.Schema({
     },
   },
 });
+
+const Product = mongoose.Model("Product", productSchema)
+
+export default Product;
