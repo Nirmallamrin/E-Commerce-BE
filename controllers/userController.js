@@ -197,20 +197,3 @@ export const forgetPassword = async (req, res) => {
     }
   };
 
-export const updateProfile = async(req, res) => {
-    try {
-        
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.status(200).json(users)
-    } catch (error) {
-        console.error("Error fetching users:", error);
-        res.status(500).send("Internal server error.");
-    }
-}
