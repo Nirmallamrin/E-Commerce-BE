@@ -197,3 +197,11 @@ export const forgetPassword = async (req, res) => {
     }
   };
 
+  export const updateProfile = async(req, res) => {
+    try {
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+

@@ -64,13 +64,6 @@ export const adminSignin = async(req, res) => {
     
 };
 
-export const updateProfile = async(req, res) => {
-    try {
-        
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 export const getAllUsers = async (req, res) => {
     try {
