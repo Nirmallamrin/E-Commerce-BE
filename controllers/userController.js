@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { generateToken } from "../generateToken.js";
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+dotenv.config();
 
 export const signup = async (req, res) => {
   try {
@@ -135,7 +137,7 @@ export const forgetPassword = async (req, res) => {
         return res.status(404).send({ message: "User not found" });
       }
   
-      const token = jwt.sign({ userId: user._id }, process.env.SE, {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: "10m",
       });
   
@@ -172,7 +174,7 @@ export const forgetPassword = async (req, res) => {
 
   export const resetPassword = async (req, res) => {
     try {
-      const decodedToken = jwt.verify(req.params.token, process.env.SECRET_KEY);
+      const decodedToken = jwt.verify(req.params.token, process.env.JWT_SECRET);
   
       if (!decodedToken) {
         return res.status(401).send({ message: "Invalid token" });
@@ -194,3 +196,21 @@ export const forgetPassword = async (req, res) => {
       res.status(500).send({ message: err.message });
     }
   };
+
+export const updateProfile = async(req, res) => {
+    try {
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({})
+        res.status(200).json(users)
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).send("Internal server error.");
+    }
+}

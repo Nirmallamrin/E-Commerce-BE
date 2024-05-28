@@ -4,9 +4,8 @@ dotenv.config();
 
 function authenticateUser(req, res, next) {
   const token = req.cookies.token;
-}
 
-jwt.verify(token, process.env.SE, (err, user) => {
+jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
   console.log(err);
 
   if (err) return res.sendStatus(403);
@@ -16,5 +15,6 @@ jwt.verify(token, process.env.SE, (err, user) => {
 
   next();
 });
+}
 
 export default authenticateUser;
