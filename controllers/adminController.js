@@ -1,6 +1,8 @@
 import Admin from '../models/adminModel.js';
 import bcrypt from 'bcrypt';
 import { adminToken} from "../generateToken.js";
+import User from '../models/userModel.js';
+
 
 export const adminSignup = async (req, res) => {
     try {
@@ -65,4 +67,52 @@ export const adminSignin = async(req, res) => {
 };
 
 
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({})
+        return res.send(users)
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).send("Internal server error.");
+    }
+}
+
+export const getSingleUsers = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.Id)
+        if(!user) {
+            return (`User doesn't exist with id: ${req.params.id}`, 404)
+        }
+        return res.send(user)
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).send("Internal server error.");
+    }
+}
+
+export const updateUserRole = async (req, res) => {
+    try {
+        const role = req.body.role
+        const user = await User.findById(req.params.Id)
+        if(!user){
+            res.status(403).json("user Not Found")
+        }
+
+        user.role = role;
+        await user.save();
+
+        return res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    const Id = req.params.Id;
+    const deleteId = await User.deleteOne({_id: Id})
+    if (!deleteId) {
+        return res.send("not deleted");
+      }
+    return res.send("deleted user")
+}
 

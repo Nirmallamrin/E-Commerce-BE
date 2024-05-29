@@ -79,7 +79,7 @@ export const getUsers = async (req, res) => {
     if (!users) {
       res.status(404).json({ error: "Users not found" });
     }
-    res.status(200).json(users);
+    return res.send(users)
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).send("Internal Server Error");
@@ -92,7 +92,7 @@ export const getUserbyUserName = async (req, res) => {
     if (!user) {
       res.status(404).json({ error: "User not found" });
     }
-    res.status(200).json(user);
+     return res.send(user)
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
@@ -205,12 +205,4 @@ export const updateProfile = async(req, res) => {
     }
 }
 
-export const getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.status(200).json(users)
-    } catch (error) {
-        console.error("Error fetching users:", error);
-        res.status(500).send("Internal server error.");
-    }
-}
+

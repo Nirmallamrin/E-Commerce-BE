@@ -1,19 +1,10 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  images: [
-    {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
-  name: {
+  images: {
+    type: String,
+  },
+  title: {
     type: String,
     required: true,
   },
@@ -49,9 +40,10 @@ const productSchema = new mongoose.Schema({
       ],
       message: "Please select correct category for product",
     },
-  },
-});
+  }, 
+},{timestamps: true},
+);
 
-const Product = mongoose.Model("Product", productSchema)
+const Product = mongoose.model("Product", productSchema)
 
 export default Product;
