@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
   images: {
-    type: String,
+    type: String
   },
   title: {
     type: String,
@@ -15,31 +15,18 @@ const productSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
+
   },
   ratings: {
     type: Number,
     default: 0,
-  },
+    min:0,
+    max:5
+
+},
   category: {
     type: String,
-    required: [true, "Please select category for this product"],
-    enum: {
-      values: [
-        "Electronics",
-        "Cameras",
-        "Laptops",
-        "Accessories",
-        "Headphones",
-        "Food",
-        "Books",
-        "Clothes/Shoes",
-        "Beauty/Health",
-        "Sports",
-        "Outdoor",
-        "Home",
-      ],
-      message: "Please select correct category for product",
-    },
+    required: true,
   }, 
 },{timestamps: true},
 );
