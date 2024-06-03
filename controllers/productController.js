@@ -74,51 +74,42 @@ export const getProductDetails = async (req, res) => {
   res.send(product)
 }
 
-// export const updateProduct = async (req, res) => {
-//     try {
-//       const currentProduct = await Product.findById(req.params.id);
-
-//       const data = {
-//         title : req.body.title,
-//         description : req.body.description,
-//         price: req.body.price,
-//         ratings: req.body.ratings,
-//         category: req.body.category,
-//       }
-
-//       if(req.file) {
-//         const ImgId = currentProduct.image.public_id;
-//         if(ImgId){
-//           await cloudinaryInstance.uploader.destroy(ImgId);
-//         }
-
-//         const newImage = await cloudinaryInstance.uploader.upload(req.body.image)
-
-//         data.image = {
-//           public_id: newImage.public_id,
-//           url:newImage.secure_url
-//         }
-//       }
-
-//       const productUpdate = await Product.findByIdAndUpdate(req.params.id, data, {new:true})
-//       res.send(productUpdate)
-     
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send("Failed to update product");
-//     }
-// }
-
 export const updateProduct = async (req, res) => {
-  try {
-    const updatedProduct = await Post.findByIdAndUpdate(req.params.id, req.body,
-      {new:true})
-      res.send(updatedProduct)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({error:"Internal Server error"})
-  }
+    try {
+      const currentProduct = await Product.findById(req.params.id);
+
+      const data = {
+        title : req.body.title,
+        description : req.body.description,
+        price: req.body.price,
+        ratings: req.body.ratings,
+        category: req.body.category,
+      }
+
+      if(req.file) {
+        const ImgId = currentProduct.image.public_id;
+        if(ImgId){
+          await cloudinary.uploader.destroy(ImgId);
+        }
+
+        const newImage = await cloudinary.uploader.upload(req.file.path)
+
+        data.image = {
+          public_id: newImage.public_id,
+          url:newImage.secure_url
+        };
+      }
+
+      const productUpdate = await Product.findByIdAndUpdate(req.params.id, data, {new:true})
+      res.send(productUpdate);
+     
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Failed to update product");
+    }
 }
+
+
 
 export const deleteProduct = async (req, res) => {
     try {
