@@ -13,6 +13,6 @@ productRouter.get('/:id', getProductDetails)
 
 productRouter.post('/admin/products/new', authenticateUser, authenticateAdmin,upload.single('file'), createProduct)
 productRouter.put('/admin/update/:id',authenticateUser,  authenticateAdmin,upload.single('image'), updateProduct)
-productRouter.delete('./admin/product/:id', authenticateAdmin, deleteProduct)
+productRouter.delete('/admin/delete/:id', deleteProduct)
 
 export default productRouter;
