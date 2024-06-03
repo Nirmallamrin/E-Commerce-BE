@@ -1,11 +1,12 @@
 import { cloudinaryInstance } from "../config/cloudinary.js";
-import Admin from "../models/adminModel.js";
+import cloudinary from 'cloudinary';
+import Admin from "../models/adminModel.js"
 import Product from "../models/productModel.js";
 
 
 export const getAllProducts = async (req, res) => {
-        const products = await User.find()
-        return res.send(products);
+        const products = await Product.find();
+        res.send(products);
 }
 
 export const createProduct = async (req, res) => {
@@ -23,7 +24,8 @@ export const createProduct = async (req, res) => {
                       });
                     }
                       console.log(result)
-                      const imageUrl = result.url;
+                      const imageUrl = result.secure_url;
+                      const imagePublicId = result.public_id;
 
                       const {title, description, price, ratings,category, adminEmail } = req.body
 
@@ -39,7 +41,10 @@ export const createProduct = async (req, res) => {
                         price,
                         ratings,
                         category,
-                        image: imageUrl,
+                        image: { 
+                          url: imageUrl,
+                          public_id: imagePublicId
+                      },
                         admin: findAdmin._id
                       })
 
@@ -52,11 +57,11 @@ export const createProduct = async (req, res) => {
         } );
     } catch (error) {
         console.log("something went wrong", error);
-      res.send("failed to create product");
+        res.send("failed to create product");
     }
 }
 
-export const getPrdoucts = async (req, res) => {
+export const getProducts = async (req, res) => {
     try {
         
     } catch (error) {
@@ -65,19 +70,54 @@ export const getPrdoucts = async (req, res) => {
 }
 
 export const getProductDetails = async (req, res) => {
-    try {
-        
-    } catch (error) {
-        
-    }
+  const product = await Product.findById(req.params.id).exec();
+  res.send(product)
 }
 
+// export const updateProduct = async (req, res) => {
+//     try {
+//       const currentProduct = await Product.findById(req.params.id);
+
+//       const data = {
+//         title : req.body.title,
+//         description : req.body.description,
+//         price: req.body.price,
+//         ratings: req.body.ratings,
+//         category: req.body.category,
+//       }
+
+//       if(req.file) {
+//         const ImgId = currentProduct.image.public_id;
+//         if(ImgId){
+//           await cloudinaryInstance.uploader.destroy(ImgId);
+//         }
+
+//         const newImage = await cloudinaryInstance.uploader.upload(req.body.image)
+
+//         data.image = {
+//           public_id: newImage.public_id,
+//           url:newImage.secure_url
+//         }
+//       }
+
+//       const productUpdate = await Product.findByIdAndUpdate(req.params.id, data, {new:true})
+//       res.send(productUpdate)
+     
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send("Failed to update product");
+//     }
+// }
+
 export const updateProduct = async (req, res) => {
-    try {
-        
-    } catch (error) {
-        
-    }
+  try {
+    const updatedProduct = await Post.findByIdAndUpdate(req.params.id, req.body,
+      {new:true})
+      res.send(updatedProduct)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({error:"Internal Server error"})
+  }
 }
 
 export const deleteProduct = async (req, res) => {

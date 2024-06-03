@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  images: {
-    type: String
-  },
+ image: {
+        public_id: {
+            type: String,
+            required: true,
+        },
+        url: {
+            type: String,
+            required: true,
+        }
+    },
+
   title: {
     type: String,
     required: true,
@@ -23,6 +31,11 @@ const productSchema = new mongoose.Schema({
     min:0,
     max:5
 
+},
+admin: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Admin',
+  required: true,
 },
   category: {
     type: String,
