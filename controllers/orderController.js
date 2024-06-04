@@ -10,14 +10,26 @@ export const newOrder = async (req, res) => {
             totalPrice,
          } = req.body
 
-         const order = await Order.create({
+         const orderExist = await Order.findOne({ paymentMethod });
+
+         if (orderExist) {
+         return res.send("order already exist")
+        }
+
+         const order = await Order({
             shippingAddress,
             orderItems,
             paymentMethod,
             totalPrice,
             paidAt: Date.now(),
-            user: req.user._id,
+             user: req.user._id,
          })
+
+         orderCreated = await order.save()
+         if(!orderCreated) {
+            return res.Status(500).send("order is not created")
+         }
+         res.Status(201).send(orderCreated)
 
         res.send(order)
     } catch (error) {

@@ -8,7 +8,7 @@ import upload from '../middlewares/upload-middleware.js';
 const productRouter = express.Router()
 
 productRouter.get('/products', getAllProducts)
-productRouter.get('./products/all', getProducts)
+productRouter.get('/products/all', getProducts)
 productRouter.get('/:id', getProductDetails)
 
 productRouter.post('/admin/products/new', authenticateUser, authenticateAdmin,upload.single('file'), createProduct)

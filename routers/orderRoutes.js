@@ -5,7 +5,7 @@ import { newOrder, getSingleOrderDetails, myOrders, getAllOrders, updateOrder, d
 
 const orderRouter = express.Router();
 
-orderRouter.post('/new',authenticateUser,newOrder)
+orderRouter.post('/new',authenticateUser, newOrder)
 orderRouter.get('/id',authenticateUser,getSingleOrderDetails)
 orderRouter.get('/orders/new',authenticateUser,myOrders)
 
