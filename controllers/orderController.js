@@ -94,7 +94,21 @@ export const getAllOrders = async (req, res) => {
 
 export const updateOrder = async (req, res) => {
     try {
-        
+        const order = await Order.findById(req.params.id,);
+
+        if (!order) {
+            return res.status(404).send("Order Not Found");
+        }
+        const { orderItems,totalPrice, shippingAddress, paymentMethod } = req.body;
+        if(orderItems) order.orderItems = orderItems;
+        if(totalPrice) order.totalPrice = totalPrice;
+        if (shippingAddress) order.shippingAddress = shippingAddress;
+        if (paymentMethod) order.paymentMethod = paymentMethod;
+
+        const updatedOrder = await order.save()
+
+        res.status(200).json(updatedOrder);
+
     } catch (error) {
         
     }
@@ -102,7 +116,8 @@ export const updateOrder = async (req, res) => {
 
 export const deleteOrder = async (req, res) => {
     try {
-        
+        const order = await Order.findByIdAndDelete(req.params.id);
+        res.send("order deleted")
     } catch (error) {
         
     }
