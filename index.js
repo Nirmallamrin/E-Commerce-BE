@@ -7,6 +7,7 @@ import userRouter from './routers/userRoutes.js';
 import adminRouter from './routers/adminRoutes.js';
 import productRouter from './routers/productRoutes.js';
 import orderRouter from './routers/orderRoutes.js';
+import cartRouter from './routers/cartRoutes.js';
 import paymentRouter from './routers/paymentRoutes.js';
 
 
@@ -24,6 +25,7 @@ app.use("/api/v1/users", userRouter)
 app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/product", productRouter)
 app.use("/api/v1/order", orderRouter )
+app.use("/api/v1/cart", cartRouter);
 app.use('/app/v1/', paymentRouter)
 
 

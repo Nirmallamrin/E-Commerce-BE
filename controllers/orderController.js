@@ -3,6 +3,12 @@ import Order from '../models/orderModel.js';
 
 export const newOrder = async (req, res) => {
     try {
+        console.log(req.user,"user")
+
+        // if (!req.user || !req.user._id) {
+        //     return res.status(400).json({ message: 'User ID not found in request' });
+        // }
+        
         const {
             shippingAddress,
             orderItems,
@@ -10,28 +16,28 @@ export const newOrder = async (req, res) => {
             totalPrice,
          } = req.body
 
-         const orderExist = await Order.findOne({ paymentMethod });
+        //  const orderExist = await Order.findOne({ paymentMethod });
 
-         if (orderExist) {
-         return res.send("order already exist")
-        }
+        //  if (orderExist) {
+        //  return res.send("order already exist")
+        // }
 
          const order = await Order({
             shippingAddress,
             orderItems,
             paymentMethod,
             totalPrice,
+            user: req.user._id,
             paidAt: Date.now(),
-             user: req.user._id,
          })
 
-         orderCreated = await order.save()
-         if(!orderCreated) {
-            return res.Status(500).send("order is not created")
-         }
-         res.Status(201).send(orderCreated)
+         const orderCreated = await order.save()
+         if (!orderCreated) {
+            return res.status(500).send("Order could not be created");
+        }
+        res.status(201).send(orderCreated)
 
-        res.send(order)
+        
     } catch (error) {
         console.log(error)
     }
@@ -39,25 +45,50 @@ export const newOrder = async (req, res) => {
 
 export const getSingleOrderDetails = async (req, res) => {
     try {
-        
+        const order = await Order.findById(req.params.id)
+    
+        if(!order) {
+            return res.status(404).send("Order Not Found");
+        }
+        res.send(order)
     } catch (error) {
-        
+        console.log(error)
     }
 }
 
 export const myOrders = async (req, res) => {
     try {
         
-    } catch (error) {
+        const order = await Order.find({user: req.user._id,})
         
+
+        if (!order) {
+            return res.status(404).send("Orders Not Found");
+        }
+        res.send(order)
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
     }
 }
 
 export const getAllOrders = async (req, res) => {
     try {
-        
+        const orders = await Order.find();
+
+        if (!orders) {
+            return res.status(404).send("Orders Not Found");
+        }
+
+        let totalAmount = 0;
+        orders.forEach((order) => {
+            totalAmount += order.totalPrice;
+        })
+
+       res.status(200).send({ orders, totalAmount });
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).send("Internal Server Error");
     }
 }
 

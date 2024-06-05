@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    // user: {
+    //   type: mongoose.Schema.ObjectId,
+    //   ref: "User",
+    //   required: true,
+    // },
     orderItems: [
       {
-        name: { type: String, required: true },
+        title: { type: String, required: true },
         qty: { type: Number, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
@@ -31,33 +31,17 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    paidAt: {
-      type: Date,
-      required: true,
-    },
-    taxPrice: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
-    shippingPrice: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
     totalPrice: {
       type: Number,
       required: true,
       default: 0.0,
     },
-    orderStatus: {
-      type: String,
-      required: true,
-      default: "Processing",
-    },
-    deliveredAt: {
-      type: Date,
-    },
+    // paidAt: {
+    //   type: Date,
+    //   required: true,
+    // },
+   
+    
   },
   {
     timestamps: true,
