@@ -4,7 +4,7 @@ import { addProductInCart, deleteProductInCart, getCartProducts } from '../contr
 
 const cartRouter = express.Router()
 
-cartRouter.get('/carts', getCartProducts)
-cartRouter.post('/', addProductInCart)
-cartRouter.delete('/:id',  deleteProductInCart)
+cartRouter.get('/carts',authenticateUser, getCartProducts)
+cartRouter.post('/add',authenticateUser, addProductInCart)
+cartRouter.delete('/delete/:id', authenticateUser, deleteProductInCart)
 export default cartRouter
