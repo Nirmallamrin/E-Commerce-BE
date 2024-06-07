@@ -1,4 +1,6 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 import connect from './config/db.js';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -12,7 +14,7 @@ import paymentRouter from './routers/paymentRoutes.js';
 
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT
 connect()
 
 app.use(bodyParser.json());
@@ -26,7 +28,7 @@ app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/product", productRouter)
 app.use("/api/v1/order", orderRouter )
 app.use("/api/v1/cart", cartRouter);
-app.use('/app/v1/', paymentRouter)
+app.use('/api/v1/payment', paymentRouter)
 
 
 app.get('/', (req, res) => {
@@ -34,5 +36,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log('listening on port ',port);
 });
