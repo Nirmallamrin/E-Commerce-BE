@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-dotenv.config();
 import connect from './config/db.js';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -13,19 +12,18 @@ import cartRouter from './routers/cartRoutes.js';
 import paymentRouter from './routers/paymentRoutes.js';
 import categoryRouter from './routers/categoryRoutes.js';
 
+dotenv.config();
+
+connect()
 
 const app = express();
 const port = process.env.PORT
-connect()
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-    
-  })
+  cors()
 );
 
 app.use(express.json());

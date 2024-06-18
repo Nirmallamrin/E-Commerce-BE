@@ -51,7 +51,7 @@ export const createProduct = async (req, res) => {
                       const imageUrl = result.secure_url;
                       const imagePublicId = result.public_id;
 
-                      const {title, price,category  } = req.body
+                      const {title, price,category, description  } = req.body
 
                       // const findAdmin = await Admin.findOne({ email: adminEmail });
 
@@ -63,7 +63,7 @@ export const createProduct = async (req, res) => {
                         title,
                       
                         price,
-                        
+                        description,
                         category,
                         image: { 
                           url: imageUrl,
