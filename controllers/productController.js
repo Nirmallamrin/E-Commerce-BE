@@ -9,6 +9,28 @@ export const getAllProducts = async (req, res) => {
         res.send(products);
 }
 
+export const getCategoryOfProducts = async (req, res) => {
+  try {
+    const categoryName = req.query.category;
+
+    if (!categoryName) {
+      return res.status(400).json({ error: "Category name is required" });
+    }
+
+    const products = await Product.find({ category: categoryName });
+
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found for this category" });
+    }
+
+    res.send(products);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createProduct = async (req, res) => {
     try {
         console.log("hitted")
@@ -21,31 +43,33 @@ export const createProduct = async (req, res) => {
                     return res.status(500).json({
                         success: false,
                         message: "Error",
+
+                        
                       });
                     }
                       console.log(result)
                       const imageUrl = result.secure_url;
                       const imagePublicId = result.public_id;
 
-                      const {title, description, price, ratings,category, adminEmail } = req.body
+                      const {title, price,category  } = req.body
 
-                      const findAdmin = await Admin.findOne({ email: adminEmail });
+                      // const findAdmin = await Admin.findOne({ email: adminEmail });
 
-                      if(!findAdmin) {
-                        return res.send("Please add Admin")
-                      }
+                      // if(!findAdmin) {
+                      //   return res.send("Please add Admin")
+                      // }
 
                       const newProduct = new Product({
                         title,
-                        description,
+                      
                         price,
-                        ratings,
+                        
                         category,
                         image: { 
                           url: imageUrl,
                           public_id: imagePublicId
                       },
-                        admin: findAdmin._id
+                        // admin: findAdmin._id
                       })
 
                       const newProductCreated = await newProduct.save()

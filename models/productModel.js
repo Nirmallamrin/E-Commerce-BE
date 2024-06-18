@@ -20,27 +20,15 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-
-  },
-  ratings: {
-    type: Number,
-    default: 0,
-    min:0,
-    max:5
-
-},
-admin: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Admin',
-  required: true,
-},
   category: {
     type: String,
     required: true,
   }, 
+  
+
+
+
+  
 },{timestamps: true},
 );
 

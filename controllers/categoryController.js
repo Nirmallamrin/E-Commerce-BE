@@ -14,9 +14,11 @@ export const getCategoryById = async (req,res) => {
         const category = await Category.findById(req.params.id);
         res.send(category)
     } catch (error) {
-        
+        console.log(error)
     }
 }
+
+
 
 export const createCategory = async (req,res) => {
     try {
@@ -40,9 +42,9 @@ export const updateCategory = async (req, res) => {
         
         const updatedCategory = await Category.findByIdAndUpdate(req.params.id,req.body, { new: true, runValidators: true });
     
-        // if(!updatedCategory) {
-        //     return res.status(404).send("category is not update")
-        // }
+        if(!updatedCategory) {
+            return res.status(404).send("category is not update")
+        }
         res.status(200).send(updatedCategory)
     } catch (error) {
         console.log(error)
