@@ -94,8 +94,15 @@ export const getProducts = async (req, res) => {
 }
 
 export const getProductDetails = async (req, res) => {
-  const product = await Product.findById(req.params.id).exec();
-  res.send(product)
+
+  try {
+    const product = await Product.findById(req.params.id).exec();
+    res.send(product)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+  
 }
 
 export const updateProduct = async (req, res) => {
