@@ -14,8 +14,8 @@ productRouter.get('/products/getcategoryofproducts', getCategoryOfProducts)
 productRouter.get('/products/:id', getProductDetails)
 
 
-productRouter.post('/admin/products/new',  authenticateAdmin,upload.single('image'), createProduct)
-productRouter.put('/admin/update/:id',authenticateUser,  authenticateAdmin,upload.single('image'), updateProduct)
+productRouter.post('/admin/products/new',authenticateAdmin,upload.single('image'), createProduct)
+productRouter.put('/admin/update/:id', authenticateAdmin,upload.single('image'), updateProduct)
 productRouter.delete('/admin/delete/:id', deleteProduct)
 
 export default productRouter;

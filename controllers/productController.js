@@ -113,7 +113,7 @@ export const updateProduct = async (req, res) => {
         title : req.body.title,
         description : req.body.description,
         price: req.body.price,
-        ratings: req.body.ratings,
+        
         category: req.body.category,
       }
 
