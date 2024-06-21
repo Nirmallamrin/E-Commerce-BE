@@ -24,11 +24,6 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 77c0d5ecb6760ba50813bee08158f190a52dde12
 app.use(express.json());
 
 app.use(cookieParser());
