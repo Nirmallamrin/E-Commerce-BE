@@ -21,18 +21,11 @@ const port = process.env.PORT || 3000;
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
 
 app.use(cors());
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a326c0a9fb2d481f42284603268e414813a22f8e
-
 app.use(express.json());
+
 app.use(cookieParser());
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/admin", adminRouter)
