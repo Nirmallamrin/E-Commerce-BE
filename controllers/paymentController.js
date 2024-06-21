@@ -1,12 +1,7 @@
 import Razorpay from "razorpay";
-// import razorpayInstance from "../config/payment.js";
+import razorpayInstance from "../config/razorpayConfig.js";
 import Payment from "../models/paymentModel.js";
 import crypto from 'crypto';
-
-const razorpayInstance = new Razorpay ({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
-});
 
 export const createOrder = async (req, res) => {
     try {
@@ -48,10 +43,10 @@ export const paymentVerify = async (req, res) => {
     try {
         const {razorpay_payment_id, razorpay_order_id, razorpay_signature} = req.body
 
-        const sha = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
 
-        sha.update(`${razorpay_order_id}|${razorpay_payment_id}`)
-        const digest = sha.digest("hex");
+        hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`)
+        const digest = hmac.digest("hex");
         if (digest !== razorpay_signature) {
             return res.status(400).json({msg: "transaction is not legit"})
         }
