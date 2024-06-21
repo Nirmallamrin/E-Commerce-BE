@@ -25,13 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-app.use(cors(
-  {
-  origin: ['http://localhost:5173', 'https://e-commerce-fe-cyan.vercel.app/'], 
-  optionsSuccessStatus: 200,
-  credentials:true,
-  }
-));
+app.use(cors());
+
 
 app.use(express.json());
 app.use(cookieParser());
