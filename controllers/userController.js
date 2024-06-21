@@ -33,7 +33,7 @@ export const signup = async (req, res) => {
     const token = generateToken(email);
 
     res.cookie("token", token);
-    res.send("Signed Successfully!");
+    res.send({message:"Signed Successfully!"});
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).send("Internal Server Error");
@@ -58,7 +58,7 @@ export const signin = async (req, res) => {
 
     const token = generateToken(email);
     res.cookie("token", token);
-    res.send("Logged in!");
+    res.send({message: "Logged in!"});
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).send("Internal Server Error");
