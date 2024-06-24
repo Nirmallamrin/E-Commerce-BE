@@ -4,23 +4,13 @@ import Order from '../models/orderModel.js';
 export const newOrder = async (req, res) => {
     try {
         console.log(req.user,"user")
-
-        // if (!req.user || !req.user._id) {
-        //     return res.status(400).json({ message: 'User ID not found in request' });
-        // }
-        
+  
         const {
             shippingAddress,
             orderItems,
             paymentMethod,
             totalPrice,
          } = req.body
-
-        //  const orderExist = await Order.findOne({ paymentMethod });
-
-        //  if (orderExist) {
-        //  return res.send("order already exist")
-        // }
 
          const order = await Order({
             shippingAddress,
@@ -41,7 +31,7 @@ export const newOrder = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-}
+};
 
 export const getSingleOrderDetails = async (req, res) => {
     try {
