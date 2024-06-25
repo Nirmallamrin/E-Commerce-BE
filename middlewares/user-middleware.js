@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import User from '../models/userModel.js'
 dotenv.config();
 
 
@@ -14,8 +13,7 @@ function authenticateUser(req, res, next) {
   if (err) return res.sendStatus(403);
 
   req.user = user;
-    
-
+  
   next();
   });
 }
