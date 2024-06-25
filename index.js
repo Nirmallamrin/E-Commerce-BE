@@ -19,12 +19,14 @@ connect()
 const app = express();
 const PORT =  3000;
 
-const corsOptions = {
-  origin: ["http://localhost:5173", "https://e-commerce-fe-cyan.vercel.app"],
-   
-};
 
-app.use(cors(corsOptions));
+
+app.use(cors(
+  {
+    origin:true,
+    credentials:true,
+  }
+));
 
 app.use(express.json());
 
