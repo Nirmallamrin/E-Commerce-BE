@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: ["http://localhost:5173", "https://e-commerce-fe-cyan.vercel.app"],
-  credentials: true, // Allow cookies to be sent to/from the server
+  credentials: true, 
 };
 
 app.use(cors(corsOptions));
@@ -43,5 +43,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('listening on port',PORT);
+  console.log(`Server is running on port ${PORT}`);
 });
