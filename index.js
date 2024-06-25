@@ -20,7 +20,15 @@ const app = express();
 const port = 3000;
 
 
-app.use(cors());
+
+
+
+app.use(cors(
+  {
+    origin: ["http://localhost:5173", "https://e-commerce-fe-cyan.vercel.app/"],
+    credentials:true,
+  }
+));
 
 app.use(express.json());
 
