@@ -3,6 +3,12 @@ import { signup, signin, signout, getUsers, getUserbyUserName, updateUserbyId, d
 
 const userRouter = express.Router();
 
+userRouter.get('/', (req,res) => {
+    res.send("user route")
+})
+
+
+
 userRouter.post('/signup', signup);
 userRouter.post('/signin', signin);
 userRouter.post('/signout', signout);
