@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connect from './config/db.js';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import userRouter from './routers/userRoutes.js';
 import adminRouter from './routers/adminRoutes.js';
@@ -19,23 +18,18 @@ connect()
 const app = express();
 const PORT =  3000;
 
-app.use(cors(
-  {
-    origin:["http://localhost:5173","https://e-commerce-fe-cyan.vercel.app"],
-    credentials:true,
-  }
-));
+app.use(cors());
 
 app.use(express.json());
 
 app.use(cookieParser());
-app.use("/api/v1/users", userRouter)
-app.use("/api/v1/admin", adminRouter)
-app.use("/api/v1/product", productRouter)
-app.use("/api/v1/order", orderRouter )
-app.use("/api/v1/cart", cartRouter);
-app.use('/api/v1/payment', paymentRouter)
-app.use('/api/v1/category', categoryRouter)
+app.use('/users', userRouter)
+app.use('/admin', adminRouter)
+app.use('/product', productRouter)
+app.use('/order', orderRouter )
+app.use('/cart', cartRouter);
+app.use('/payment', paymentRouter)
+app.use('/category', categoryRouter)
 
 
 app.get('/', (req, res) => {
