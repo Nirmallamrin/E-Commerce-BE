@@ -17,11 +17,11 @@ dotenv.config();
 connect()
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT =  3000;
 
 const corsOptions = {
   origin: ["http://localhost:5173", "https://e-commerce-fe-cyan.vercel.app"],
-  credentials: true, 
+   
 };
 
 app.use(cors(corsOptions));
