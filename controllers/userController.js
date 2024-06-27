@@ -48,20 +48,19 @@ export const signin = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.send("User not found");
     }
 
     const matchPassword = await bcrypt.compare(password, user.hashPassword);
-
     if (!matchPassword) {
       return res.send("Password is not correct");
     }
 
     const token = generateToken(email);
+
     res.cookie("token", token);
-    res.send({message: "Logged in!"});
+    res.send({message: "Logged in!", token});
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).send("Internal Server Error");
