@@ -64,11 +64,7 @@ export const paymentVerify = async (req, res) => {
             return res.status(400).json({ msg: 'Transaction is not legit' });
         }
 
-        res.json({
-            msg: 'Success',
-            orderId: razorpay_order_id,
-            paymentId: razorpay_payment_id,
-        });
+        res.status(200).json({ message: 'Payment order validated successfully' });
 
     } catch (error) {
         console.error('Error verifying payment:', error);

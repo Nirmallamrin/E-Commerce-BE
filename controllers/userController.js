@@ -48,11 +48,13 @@ export const signin = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.send("User not found");
     }
 
     const matchPassword = await bcrypt.compare(password, user.hashPassword);
+    
     if (!matchPassword) {
       return res.send("Password is not correct");
     }

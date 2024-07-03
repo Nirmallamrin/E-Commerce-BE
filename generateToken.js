@@ -8,6 +8,6 @@ export const generateToken = (email) => {
     return jwt.sign({ data:email } , secret_key, {expiresIn: "1d"});
 };
 
-export const adminToken = (email, role) => {
-    return jwt.sign({email, role}, secret_key, {expiresIn: '1d'});
+export const adminToken = (email) => {
+    return jwt.sign({email}, secret_key, {expiresIn: '1d'});
 };
