@@ -27,10 +27,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: 0.0,
     },
-    // paidAt: {
-    //   type: Date,
-    //   required: true,
-    // },
+ 
   },
   {
     timestamps: true,

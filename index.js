@@ -19,19 +19,24 @@ const app = express();
 const PORT =  3000;
 
 
+app.use(cors({
+  origin: ["http://localhost:5173", "https://e-commerce-fe-cyan.vercel.app"],
+  credentials: true,
+  methods: ["GET", "HEAD", "OPTIONS", "POST", "DELETE", "PUT", "PATCH"],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}))
 
-app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/users', userRouter)
-app.use('/admin', adminRouter)
-app.use('/product', productRouter)
-app.use('/order', orderRouter )
+app.use('/users', userRouter);
+app.use('/admin', adminRouter);
+app.use('/product', productRouter);
+app.use('/order', orderRouter );
 app.use('/cart', cartRouter);
-app.use('/payment', paymentRouter)
-app.use('/category', categoryRouter)
+app.use('/payment', paymentRouter);
+app.use('/category', categoryRouter);
 
 
 app.get('/', (req, res) => {

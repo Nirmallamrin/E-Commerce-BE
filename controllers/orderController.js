@@ -1,9 +1,8 @@
-
 import Order from '../models/orderModel.js';
 
 export const newOrder = async (req, res) => {
     try {
-        console.log(req.user,"user")
+        console.log('Authenticated user:', req.user);
   
         const {
             shippingAddress,
@@ -18,7 +17,7 @@ export const newOrder = async (req, res) => {
             paymentMethod,
             totalPrice,
             user: req.user._id,
-            paidAt: Date.now(),
+            
          })
 
          const orderCreated = await order.save()
