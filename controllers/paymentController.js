@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const razorpayInstance = new Razorpay ({
-    key_id: "rzp_test_L6wBhNL2VYpuYf",
-    key_secret:"3dcHujkEUhyBQBMTozHibuqK"
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret:process.env.RAZORPAY_KEY_SECRET
 });
 
 export const createOrder = async (req, res) => {
@@ -49,10 +49,17 @@ export const paymentVerify = async (req, res) => {
     try {
         const {razorpay_payment_id, razorpay_order_id, razorpay_signature} = req.body
 
+        console.log('RAZORPAY_KEY_SECRET:', process.env.RAZORPAY_KEY_SECRET);  // Debugging line
+
+        if (!process.env.RAZORPAY_KEY_SECRET) {
+            return res.status(500).json({ message: 'Razorpay secret key not found' });
+        }
+        
         const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
 
         hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`)
         const digest = hmac.digest("hex");
+
         if (digest !== razorpay_signature) {
             return res.status(400).json({msg: "transaction is not legit"})
         }
@@ -64,9 +71,10 @@ export const paymentVerify = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error)
+        console.error('Error verifying payment:', error);
+        res.status(500).send('Error verifying payment');
     }
-}
+};
 
 export const getPaymentStatus = async (req, res) => {
     try {
