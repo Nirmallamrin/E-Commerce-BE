@@ -12,17 +12,16 @@ function authenticateAdmin(req, res, next) {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      console.log(err);
+      console.error("JWT Verification Error:", err);
       return res.status(403).send("Invalid token.");
     }
 
-    req.user = user;
-    console.log(req.user)
-
-    if (req.user.role !== "admin") {
+    if (!user || user.role !== "admin") {
       return res.status(403).send("Access denied. Admins only.");
     }
 
+    req.user = user; // Attach the user object to the request
+    console.log("Authenticated User:", req.user);
     next();
   });
 }
