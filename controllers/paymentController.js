@@ -51,7 +51,7 @@ export const paymentVerify = async (req, res) => {
 
         console.log('RAZORPAY_KEY_SECRET:', key_secret);  // Debugging line
 
-        if (!process.env.RAZORPAY_KEY_SECRET) {
+        if (!key_secret) {
             return res.status(500).json({ message: 'Razorpay secret key not found' });
         }
 
