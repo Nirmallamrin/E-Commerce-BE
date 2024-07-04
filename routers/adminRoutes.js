@@ -8,7 +8,7 @@ const adminRouter = express.Router()
 
 adminRouter.post("/signup", adminSignup)
 adminRouter.post("/signin", adminSignin)
-adminRouter.get("/users",authenticateUser, authenticateAdmin, getAllUsers);
+adminRouter.get("/users", getAllUsers);
 adminRouter.get("/users/:Id", authenticateUser, authenticateAdmin, getSingleUsers)
 adminRouter.put("/users/:Id", authenticateUser, authenticateAdmin, updateUserRole)
 adminRouter.delete("/users/:Id", authenticateUser, authenticateAdmin, deleteUser)
