@@ -14,7 +14,7 @@ productRouter.get('/products/getcategoryofproducts', getCategoryOfProducts)
 productRouter.get('/products/:id', getProductDetails)
 
 
-productRouter.post('/admin/products/new',authenticateAdmin,upload.single('image'), createProduct)
+productRouter.post('/admin/products/new',upload.single('image'), createProduct)
 productRouter.put('/admin/update/:id',upload.single('image'), updateProduct)
 productRouter.delete('/admin/delete/:id', deleteProduct)
 
