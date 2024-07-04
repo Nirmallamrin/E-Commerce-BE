@@ -53,11 +53,6 @@ export const createProduct = async (req, res) => {
 
                       const {title, price,category, description  } = req.body
 
-                      // const findAdmin = await Admin.findOne({ email: adminEmail });
-
-                      // if(!findAdmin) {
-                      //   return res.send("Please add Admin")
-                      // }
 
                       const newProduct = new Product({
                         title,
