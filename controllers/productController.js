@@ -34,9 +34,11 @@ export const getCategoryOfProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
     try {
         console.log("hitted")
+        console.log(req.body)
         if(!req.file) {
-            return res.send("file is not visible")
+             res.send("file is not visible")
         }
+        
         cloudinaryInstance.uploader.upload(req.file.path, async(err, result) => {
             if(err) {
                 console.log(err, "error") 
@@ -55,8 +57,7 @@ export const createProduct = async (req, res) => {
 
 
                       const newProduct = new Product({
-                        title,
-                      
+                        title,                     
                         price,
                         description,
                         category,
@@ -64,7 +65,7 @@ export const createProduct = async (req, res) => {
                           url: imageUrl,
                           public_id: imagePublicId
                       },
-                        // admin: findAdmin._id
+                        
                       })
 
                       const newProductCreated = await newProduct.save()
