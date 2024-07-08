@@ -33,7 +33,7 @@ export const getCategoryOfProducts = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     try {
-        console.log("hitted")
+        console.log("Request Body:", req.body);
         console.log(req.body)
         if(!req.file) {
              res.send("file is not visible")
@@ -44,9 +44,7 @@ export const createProduct = async (req, res) => {
                 console.log(err, "error") 
                     return res.status(500).json({
                         success: false,
-                        message: "Error",
-
-                        
+                        message: "Error",                    
                       });
                     }
                       console.log(result)
