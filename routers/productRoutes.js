@@ -2,6 +2,7 @@ import express from 'express';
 import { createProduct, deleteProduct, getAllProducts,getCategoryOfProducts, getProducts, getProductDetails, updateProduct } from '../controllers/productController.js';
 import  authenticateUser from "../middlewares/user-middleware.js";
 import authenticateAdmin from "../middlewares/admin-middleware.js";
+import multer from 'multer';
 import upload from '../middlewares/upload-middleware.js';
 
 
