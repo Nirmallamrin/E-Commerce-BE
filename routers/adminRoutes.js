@@ -11,6 +11,6 @@ adminRouter.post("/signin", adminSignin)
 adminRouter.get("/users", getAllUsers);
 adminRouter.get("/users/:Id", authenticateUser, authenticateAdmin, getSingleUsers)
 adminRouter.put("/users/:Id", authenticateUser, authenticateAdmin, updateUserRole)
-adminRouter.delete("/users/:Id", authenticateUser, authenticateAdmin, deleteUser)
+adminRouter.delete("/users/:Id", deleteUser)
 
 export default adminRouter;
