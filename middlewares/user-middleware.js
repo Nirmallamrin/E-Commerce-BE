@@ -3,25 +3,16 @@ import dotenv from "dotenv";
 dotenv.config();
 
 function authenticateUser(req, res, next) {
-  const authHeader = req.headers['authorization'];
+  const token = req.cookies.token;
 
-  if (!authHeader) {
-    return res.status(401).json({ message: 'Access denied. No token provided.' });
-  }
-
-  const token = authHeader.split(' ')[1];
-  console.log(token, "token");
-  
-  if (!token) {
-    return res.status(401).json({ message: 'Access denied. No token provided.' });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    console.log(err, "err");
+  jwt.verify(token, process.env.SE, (err, user) => {
+    console.log(err);
 
     if (err) return res.sendStatus(403);
 
     req.user = user;
+    console.log(req.user.role);
+
     next();
   });
 }
