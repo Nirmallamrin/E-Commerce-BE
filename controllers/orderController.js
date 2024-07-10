@@ -16,7 +16,7 @@ export const newOrder = async (req, res) => {
             paymentMethod,
             totalPrice,
             user: req.user._id,         
-         })
+         });
 
         const orderCreated = await order.save()
          if (!orderCreated) {
