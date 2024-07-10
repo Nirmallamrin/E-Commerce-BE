@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import User from "../models/userModel.js"; // Adjust the path to your User model
 dotenv.config();
 
-function authenticateUser(req, res, next) {
+async function authenticateUser(req, res, next) {
   const authHeader = req.headers['authorization'];
 
   if (!authHeader) {
@@ -11,19 +12,27 @@ function authenticateUser(req, res, next) {
 
   const token = authHeader.split(' ')[1];
   console.log(token, "token");
-  
+
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    console.log(err, "err");
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded, "decoded token");
 
-    if (err) return res.sendStatus(403);
+    // Fetch the user from the database
+    const user = await User.findById(decoded._id);
+    if (!user) {
+      return res.status(401).json({ message: 'User not found.' });
+    }
 
     req.user = user;
     next();
-  });
+  } catch (err) {
+    console.log(err, "err");
+    return res.sendStatus(403);
+  }
 }
 
 export default authenticateUser;
