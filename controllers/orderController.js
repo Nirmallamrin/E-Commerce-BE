@@ -20,7 +20,7 @@ export const newOrder = async (req, res) => {
             
          })
 
-         const orderCreated = await order.save()
+        const orderCreated = await order.save()
          if (!orderCreated) {
             return res.status(500).send("Order could not be created");
         }
