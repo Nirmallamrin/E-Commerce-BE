@@ -2,8 +2,7 @@ import Order from '../models/orderModel.js';
 
 export const newOrder = async (req, res) => {
     try {
-        console.log('Authenticated user:', req.user);
-  
+        
         const {
             shippingAddress,
             orderItems,
