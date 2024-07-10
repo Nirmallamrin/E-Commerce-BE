@@ -15,7 +15,8 @@ export const newOrder = async (req, res) => {
             shippingAddress,
             orderItems,
             paymentMethod,
-            totalPrice,          
+            totalPrice,   
+            user: req.user._id,       
          })
 
         const orderCreated = await order.save()
