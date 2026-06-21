@@ -8,7 +8,7 @@ const orderRouter = express.Router();
 orderRouter.post('/new',authenticateUser,newOrder)
 orderRouter.get('/:id',authenticateUser, getSingleOrderDetails)
 
-orderRouter.get('/myorders/me',myOrders)
+orderRouter.get('/myorders/me', authenticateUser, myOrders)
 
 orderRouter.get('/admin/orders', authenticateUser,authenticateAdmin, getAllOrders)
 orderRouter.put('/admin/update/:id', authenticateUser,authenticateAdmin, updateOrder)

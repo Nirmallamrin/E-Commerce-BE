@@ -1,7 +1,10 @@
 import Order from '../models/orderModel.js';
+import User from '../models/userModel.js';
 
 export const newOrder = async (req, res) => {
     try {
+        const user = await User.findOne({ email: req.user.data });
+        if (!user) return res.status(404).send("User not found");
         
         const {
             shippingAddress,
@@ -15,7 +18,7 @@ export const newOrder = async (req, res) => {
             orderItems,
             paymentMethod,
             totalPrice,
-            user: req.user._id,         
+            user: user._id,         
          });
 
         const orderCreated = await order.save()
@@ -45,8 +48,10 @@ export const getSingleOrderDetails = async (req, res) => {
 
 export const myOrders = async (req, res) => {
     try {
-        
-        const order = await Order.find({user: req.user._id,})
+        const user = await User.findOne({ email: req.user.data });
+        if (!user) return res.status(404).send("User not found");
+
+        const order = await Order.find({user: user._id})
         
 
         if (!order) {

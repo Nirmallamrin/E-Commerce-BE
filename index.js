@@ -10,6 +10,7 @@ import orderRouter from './routers/orderRoutes.js';
 import cartRouter from './routers/cartRoutes.js';
 import paymentRouter from './routers/paymentRoutes.js';
 import categoryRouter from './routers/categoryRoutes.js';
+import wishlistRouter from './routers/wishlistRoutes.js';
 
 dotenv.config();
 
@@ -20,7 +21,12 @@ const PORT =  3000;
 
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://e-commerce-fe-cyan.vercel.app"],
+  origin: [
+    "http://localhost:5173", 
+    "http://localhost:3000",
+    "https://e-commerce-fe-cyan.vercel.app",
+    "https://e-commerce-fe-cyan.netlify.app"
+  ],
   credentials: true,
   methods: ["GET", "HEAD", "OPTIONS", "POST", "DELETE", "PUT", "PATCH"],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -38,6 +44,7 @@ app.use('/order', orderRouter );
 app.use('/cart', cartRouter);
 app.use('/payment', paymentRouter);
 app.use('/category', categoryRouter);
+app.use('/wishlist', wishlistRouter);
 
 
 app.get('/', (req, res) => {
